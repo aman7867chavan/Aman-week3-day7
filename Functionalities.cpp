@@ -1,5 +1,8 @@
 #include "Functionalities.h"
 
+std::mutex mt;
+// std::lock_guard<std::mutex>lg(mt);
+
 
 void CreateObjects(Container&data)
 {
@@ -50,15 +53,17 @@ void CalculateTax(const Container &data)
         const VType& val=ptr->instance();
         if(std::holds_alternative<BusinessPointer>(val)){
             const BusinessPointer&p=std::get<BusinessPointer>(val);
+            std::lock_guard<std::mutex>lk(mt);
             std::cout<<"Tax for Business: "<<0.2*((p->expense())-(p->revenue()))<<'\n';
             
         }
         else
         {
-            const EmpPointer&p=std::get<EmpPointer>(val);
-            if(p->type()==EmployeeType::REGULAR){
+            // const EmpPointer&p=std::get<EmpPointer>(val);
+            if(const EmpPointer&p=std::get<EmpPointer>(val);p->type()==EmployeeType::REGULAR){// if initializer... to limit the scope of that statement
+                mt.lock();
             std::cout<<"Tax is 10%:"<<0.1*(p->salary())<<'\n';
-
+                mt.unlock();
             }
             else
                 std::cout<<"Tax is 20%:"<<0.2*(p->salary())<<'\n';
