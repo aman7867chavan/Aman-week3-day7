@@ -44,6 +44,7 @@ void CreateObjects(Container&data)
     
 void CalculateTax(const Container &data)
 {
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     for(const dataPointer& ptr:data){
 
         const VType& val=ptr->instance();
@@ -69,6 +70,7 @@ void CalculateTax(const Container &data)
 
 void CallParentOperator(const Container &data)
 {
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     if(data.empty())
         throw std::runtime_error("No data");
     

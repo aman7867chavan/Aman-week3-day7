@@ -1,6 +1,7 @@
 #ifndef FUNCTIONALITIES_H
 #define FUNCTIONALITIES_H
 #include "Employee.h"
+#include <thread>
 #include "BusinessOwner.h"
 #include <memory>
 #include "DataModeller.h"
